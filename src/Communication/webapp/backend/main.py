@@ -1,4 +1,5 @@
 import json
+import paho.mqtt.client as mqtt
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -38,5 +39,7 @@ async def create_feeding(feeding: Feeding):
     with open('feedings.json', 'w') as f:
         feedings.append(feeding_dict)
         f.write(json.dumps(feedings, indent=4))
-    #here
+        print(feedings)
+        
+        #mqtt.publish("/", "Hello from Fastapi")
     return {"message": f"Feeding added {feeding}"}
