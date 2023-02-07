@@ -9,3 +9,6 @@
 - sudo apt install iptables
 - sudo iptables -I INPUT -p tcp -m tcp --dport 8883 -j ACCEPT
 - sudo ufw allow 8884
+
+## Domains
+- MQTT: http://petsitter.ddnsgeek.com/ :35.177.203.22
