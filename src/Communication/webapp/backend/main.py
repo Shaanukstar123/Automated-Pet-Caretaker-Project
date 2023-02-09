@@ -1,10 +1,11 @@
 import json
 import paho.mqtt.client as mqtt
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+client = mqtt.Client()
+client.connect("35.177.203.22", port=1883)
 app = FastAPI(debug=True)
 app.add_middleware(
     CORSMiddleware,
@@ -39,7 +40,8 @@ async def create_feeding(feeding: Feeding):
     with open('feedings.json', 'w') as f:
         feedings.append(feeding_dict)
         f.write(json.dumps(feedings, indent=4))
-        print(feedings)
+        #print(feedings)
+        filtered_data = [{k: v for k, v in item.items() if k in ["pet", "date", "schedule", "food"]} for item in feedings]
         
-        #mqtt.publish("/", "Hello from Fastapi")
+        client.publish("timetable", json.dumps(filtered_data))
     return {"message": f"Feeding added {feeding}"}
