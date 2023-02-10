@@ -5,7 +5,7 @@ import sys
 
 EMULATE_HX711=False
 
-referenceUnit = 400
+referenceUnit = 216
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
