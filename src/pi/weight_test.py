@@ -54,5 +54,5 @@ def measure(hx):
 
     hx.power_down()
     hx.power_up()
-    time.sleep(0.5)
+    time.sleep(0.2)
     return val
