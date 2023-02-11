@@ -31,12 +31,3 @@ def dispense(pwm_servo):
 
     time.sleep(1)
     set_angle(0,pwm_servo)
-
-
-# Servo(50)
-# servo_pin = 25
-# pwm_servo = setup_servo()
-# dispense(pwm_servo)
-
-# # Clean up the GPIO when done
-# GPIO.cleanup()
