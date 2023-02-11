@@ -41,7 +41,6 @@ async def create_feeding(feeding: Feeding):
         feedings.append(feeding_dict)
         f.write(json.dumps(feedings, indent=4))
         #print(feedings)
-        filtered_data = [{k: v for k, v in item.items() if k in ["pet", "date", "schedule", "food"]} for item in feedings]
-        
-        client.publish("timetable", json.dumps(filtered_data))
+        filtered_data = [{k: v for k, v in item.items() if k in ["pet", "date", "schedule", "food"]} for item in feedings] 
+    client.publish("timetable", json.dumps(feeding_dict))
     return {"message": f"Feeding added {feeding}"}
