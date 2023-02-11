@@ -1,13 +1,11 @@
 
-import servo_test as servo
-import weight_test as weight
+# import servo_test as servo
+# import weight_test as weight
 import RPi.GPIO as GPIO
-from time import sleep
+import time
+import servo_test as servo
 
-# Set the GPIO mode
 GPIO.setmode(GPIO.BCM)
-
-# Define the GPIO pins used by the TB6612FNG controller
 AIN1 = 26
 AIN2 = 19
 STBY = 21
@@ -19,11 +17,11 @@ GPIO.setup(AIN2, GPIO.OUT)
 GPIO.setup(STBY, GPIO.OUT)
 GPIO.setup(PWM_PIN, GPIO.OUT)
 
-# Set the STBY pin to active
 GPIO.output(STBY, GPIO.HIGH)
 
-# Initialize PWM on the PWM_PIN with a frequency of 50 Hz
 pwm = GPIO.PWM(PWM_PIN, 50)
+
+stuck_speed = 100
 
 def allStop():
     # Set all pins to LOW
@@ -45,45 +43,12 @@ def reverseDrive(speed):
     # Start PWM with the specified duty cycle
     pwm.start(speed)
 
-# Example usage
-allStop()
-
-    	
-
-servo_pin = 25
-hx = weight.setup_weight()
-pwm_servo = servo.setup_servo()
-count = 0
-target = 10
-avg = 0
-total = 0
-error = 0.5*target
-servo.dispense(pwm_servo)
-hx.tare()
-while True:
-	forwardDrive(30)
-	val = weight.measure(hx)
-	if (val-avg)<error:
-		if count > 3:
-			total = val
-			count = 1    		
-
-		count+=1
-		total+=val
-		avg = total/count
-	print("Avg = ", avg)
-
-	if avg>target:
-		allStop()
-		servo.dispense(pwm_servo)
-		hx.tare()
-
-
-sleep(100)
-#allStop()
-#reverseDrive(50)
-#sleep(2)
-allStop()
-
-# Clean up the GPIOs
-GPIO.cleanup()
+def unstuck():
+    reverseDrive(stuck_speed)
+    time.sleep(0.5)
+    forwardDrive(stuck_speed)
+    time.sleep(0.5)
+    reverseDrive(stuck_speed)
+    time.sleep(0.5)
+    forwardDrive(stuck_speed)
+    time.sleep(0.5)
