@@ -4,6 +4,7 @@ import datetime
 import json
 import threading
 import dispense as dispense
+import ssl
 
 
 ###Communication###
@@ -26,7 +27,7 @@ def check_dispense(now,timetable):
         if (timetable[i])["date"] == now:
             print("Dispense FOOD")
             (timetable[i])["date"] = "dispensed"
-            dispense.start_dispense()
+            dispense.start_dispense((timetable[i])["food"])
 
 # timetable = [
 # {"id": "afK04drjIsDxu9I6dWjY","pet": "silver","owner": "aaaa@gmail.coooom","date": "02/02/2023, 09:16",
@@ -37,7 +38,13 @@ def check_dispense(now,timetable):
 
 def mqtt_thread():
     client = mqtt.Client()
-    client.connect("35.177.203.22", 1883, 60)
+    ##TLS SSL
+    client. tls_set(cert_reqs=ssl.CERT_NONE)
+    #client. tls_insecure_set(True)
+    #client.tls_set(ca_certs="chain.pem", certfile="cert.pem",keyfile="privkey.pem")
+    client.connect("35.177.203.22",port=8883)
+
+    #client.connect("35.177.203.22", 1883, 60)
     client.on_connect = on_connect
     client.on_message = on_message
     print("Working")
