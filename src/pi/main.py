@@ -3,10 +3,13 @@ import servo_test as servo
 import datetime
 import json
 import threading
+import dispense as dispense
 
 
-dispense = False
+###Communication###
+
 timetable = []
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected")
@@ -23,7 +26,7 @@ def check_dispense(now,timetable):
         if (timetable[i])["date"] == now:
             print("Dispense FOOD")
             (timetable[i])["date"] = "dispensed"
-
+            dispense.start_dispense()
 
 # timetable = [
 # {"id": "afK04drjIsDxu9I6dWjY","pet": "silver","owner": "aaaa@gmail.coooom","date": "02/02/2023, 09:16",
@@ -42,7 +45,6 @@ def mqtt_thread():
 
 t = threading.Thread(target = mqtt_thread)
 t.start()
-
 while True:
     now = datetime.datetime.now()
     date_format = "%d/%m/%Y, %H:%M"
