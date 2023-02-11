@@ -3,9 +3,11 @@ import paho.mqtt.client as mqtt
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import ssl
 
 client = mqtt.Client()
-client.connect("35.177.203.22", port=1883)
+client.tls_set(cert_reqs=ssl.CERT_NONE)
+client.connect("35.177.203.22", port=8883)
 app = FastAPI(debug=True)
 app.add_middleware(
     CORSMiddleware,
