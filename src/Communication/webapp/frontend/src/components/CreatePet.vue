@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-import BaseButton from './BaseButton.vue';
+import {ref} from 'vue';
+import {useStore} from 'vuex';
 
 const emit = defineEmits(['return-home']);
 
@@ -10,101 +9,60 @@ const weight = ref();
 const store = useStore();
 
 function submitPet() {
-  store.dispatch('addPet', { name, weight });
+  store.dispatch('addPet', {name, weight});
   emit('return-home');
 }
 </script>
 
 <template>
-  <div class='create-pet'>
-    <div class='create-pet__wrapper'>
-      <div class="icons">
-        <font-awesome-icon :icon="['fa-solid', 'fa-dog']" class='dog-icon'/>
-        <font-awesome-icon :icon="['fa-solid', 'fa-cat']" class='cat-icon'/>
-      </div>
-      <form class='form card' @submit.prevent='submitPet()'>
-        <div class='field'>
-          <label for='name'>Pet's name</label>
-          <input
-              id='email'
-              v-model='name'
-              class='input'
-              placeholder='Name'
-              required
-              type='text'
+  <div class="form-wrapper">
+    <div class="icons">
+      <font-awesome-icon :icon="['fa-solid', 'fa-dog']" class='dog-icon'/>
+      <font-awesome-icon :icon="['fa-solid', 'fa-cat']"/>
+    </div>
+    <div>
+      <v-sheet width="500">
+        <v-from @submit.prevent="submitPet">
+          <v-text-field
+              v-model="name"
+              aria-required="true"
+              label="Pet's name"
+          >
+          </v-text-field>
+          <v-text-field
+              v-model="weight"
+              aria-required="true"
+              label="Pet's weight (kg)"
+              min="0"
+              single-line
+              type="number"
           />
-        </div>
-        <div class='field'>
-          <label for='weight'>Pet's weight</label>
-          <input
-              v-model='weight'
-              class='input'
-              placeholder='Weight'
-              required
-              type='number'
-          />
-        </div>
-        <div class='field button_wrapper'>
-          <BaseButton text='Add pet'/>
-        </div>
-      </form>
+          <v-btn block type="submit" @click="submitPet()">Submit</v-btn>
+        </v-from>
+      </v-sheet>
     </div>
   </div>
 </template>
 
 <style scoped>
-.create-pet {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.create-pet__wrapper {
-  padding: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
 
 .icons {
+  font-size: xxx-large;
+  margin-bottom: 20px;
+}
+
+.form-wrapper {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
 }
 
 .dog-icon {
-  margin-bottom: 90px;
-  font-size: 100px;
+  padding-right: 10px;
 }
 
-.cat-icon {
-  padding-left: 15px;
-  margin-bottom: 90px;
-  font-size: 100px;
-}
-
-input {
-  font-size: 30px;
-  max-width: 300px;
-  margin-left: 30px;
-  border-radius: 5px;
-  padding-left: 20px;
-}
-
-.field {
-  font-size: 40px;
-  margin-bottom: 70px;
-}
-
-.button_wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-button {
-  font-size: 40px;
-  padding: 10px;
-  border-radius: 10px;
-}
 </style>
