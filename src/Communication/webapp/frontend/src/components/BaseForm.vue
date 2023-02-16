@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import BaseButton from './BaseButton.vue';
+import {ref} from 'vue';
 
 defineProps({
   buttonText: String,
@@ -12,93 +11,51 @@ const password = ref();
 </script>
 
 <template>
-  <form class='form card' @submit.prevent="$emit('submit-form', { email, password })">
-    <div class='card_header'>
-      <h1 class='form_heading'>{{ headerText }}</h1>
-    </div>
-    <div class='field'>
-      <label for='email'>Email</label>
-      <input id='email' v-model='email' class='input' placeholder='Email' required type='email'>
-    </div>
-    <div class='field'>
-      <label for='password'>Password</label>
-      <input v-model='password' class='input' placeholder='Password' required type='password'>
-    </div>
-    <div class='field'>
-      <BaseButton :text='buttonText' />
-    </div>
-  </form>
+  <div class='base-form'>
+    <v-sheet>
+      <v-form
+          @submit.prevent="$emit('submit-form', { email, password })"
+      >
+        <div class='base-form__header'> {{ headerText }}</div>
+        <v-text-field v-model="email" label="Email" type="email"></v-text-field>
+        <v-text-field v-model="password" label="Password" type="password"></v-text-field>
+        <v-btn block class="mt-2" type="submit">{{ buttonText }}</v-btn>
+      </v-form>
+    </v-sheet>
+  </div>
 </template>
 
 <style scoped>
-.card {
-  width: 400px;
-  height: 350px;
-  background: white;
-  border: 1px solid whitesmoke;
-  border-radius: 20px;
-  box-shadow: 10px 10px 64px 0 rgba(180, 180, 207, 0.75);
-  -webkit-box-shadow: 10px 10px 64px 0 rgba(186, 186, 202, 0.75);
-  -moz-box-shadow: 10px 10px 64px 0 rgba(208, 208, 231, 0.75);
-
-}
-
-.form {
-  padding: 25px;
-}
-
-.card_header {
+.base-form {
+  position: absolute;
   display: flex;
-  align-items: center;
   justify-content: center;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 35%;
+  text-align: center;
+  z-index: 2;
 }
 
-.form_heading {
-  padding-bottom: 20px;
+.base-form__header {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 }
 
-.field {
-  padding-bottom: 10px;
-}
-
-.input {
-  border-radius: 5px;
-  background-color: white;
-  padding: 5px;
+:deep(.v-sheet) {
   width: 100%;
-  height: 30px;
-  color: black;
-  border: 1px solid black
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.2rem;
 }
 
-.input:focus-visible {
-  outline: 1px solid black;
-}
-
-.input::placeholder {
-  color: black;
-}
-
-label {
-  color: black;
-  display: block;
-  padding-bottom: 4px;
-  font-size: larger;
-}
-
-button {
-  background-color: black;
-  margin-top: 20px;
-  width: 25%;
-  height: fit-content;
-  border-radius: 11px;
-  font-size: larger;
-  padding: 7px 12px;
-  font-weight: 500;
-  color: white;
-}
-
-button:hover {
-  opacity: 0.6;
+:deep(.v-form) {
+  width: 100%;
+  height: 100%;
 }
 </style>
