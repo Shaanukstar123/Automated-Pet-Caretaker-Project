@@ -1,5 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 
@@ -12,8 +12,10 @@ function changeRoute(url) {
   <div>
     <div class='img'></div>
     <div class='center'>
-      <div class='title'>Pet Feeding App</div>
+      <v-avatar size="100" style="margin: 25px"><img alt="logo" class="logo" src="../assets/iFeedLogo.png"></v-avatar>
+      <div class='title'>iFeed</div>
       <div class='sub_title'>a site for pet feeding</div>
+      <div class="commercial" @click="changeRoute('/commercial')">Click here to learn more about the product.</div>
       <div class='btns'>
         <button @click="changeRoute('/login')">Login</button>
         <button @click="changeRoute('/register')">Register</button>
@@ -23,13 +25,16 @@ function changeRoute(url) {
 </template>
 
 <style scoped>
+.logo {
+  height: 100px;
+  width: 100px;
+}
 
 .img {
-  background: url("../assets/dogs.jpg") no-repeat;
   width: 100%;
   height: 100vh;
   background-size: cover;
-  background-position: center;
+  background: url("../assets/dogCatEating.png") repeat;
   position: relative;
 }
 
@@ -49,6 +54,7 @@ function changeRoute(url) {
   width: 100%;
   padding: 0 20px;
   text-align: center;
+  z-index: 2;
 }
 
 .center .title {
@@ -62,6 +68,16 @@ function changeRoute(url) {
   padding-top: 40px;
   font-size: 52px;
   font-weight: 600;
+}
+
+.center .commercial {
+  color: white;
+  padding-top: 20px;
+  cursor: pointer;
+}
+
+.commercial:hover {
+  text-decoration: underline;
 }
 
 .center .btns {
