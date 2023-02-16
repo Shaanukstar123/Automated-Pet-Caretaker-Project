@@ -1,12 +1,12 @@
 <script setup>
-import { useStore } from 'vuex';
-import { computed, ref } from 'vue';
-import BaseButton from '../components/BaseButton.vue';
+import {useStore} from 'vuex';
+import {computed, ref} from 'vue';
 import PetList from '../components/PetList.vue';
 import router from '../routes/index.js';
 import CreatePet from '../components/CreatePet.vue';
 import FeedingHistory from '../components/FeedingHistory.vue';
 import FeedingForm from '../components/FeedingForm.vue';
+import LiveStream from "../components/LiveStream.vue";
 
 const store = useStore();
 const email = computed(() => store.getters.user.data.email);
@@ -18,111 +18,189 @@ function logout() {
 </script>
 
 <template>
-  <div class="dashboard">
-    <div class="navbar">
-      <div class="navbar__wrapper">
-        <font-awesome-icon
-            :icon="['fa-solid', 'fa-user']"
-            class="navbar__user"
-        />
-        <div class="navbar__item navbar__email">{{ email }}</div>
-        <div class="navbar__action">
-          <BaseButton
-              class="navbar__item"
-              text="My pets"
-              @click="activeTabIndex = 0"
-          />
-          <BaseButton
-              class="navbar__item"
-              text="Add pet"
-              @click="activeTabIndex = 1"
-          />
-          <BaseButton
-              class="navbar__item"
-              text="Add feeding time"
-              @click="activeTabIndex = 2"
-          />
-          <BaseButton
-              class="navbar__item"
-              text="Feeding history"
-              @click="activeTabIndex = 3"
-          />
+  <v-card>
+    <v-layout>
+      <v-navigation-drawer
+          floating
+          permanent
+      >
+        <v-list
+            density="compact"
+            nav
+        >
+          <div class="logo">
+            <img alt="logo" src="../assets/iFeed.png"/>
+          </div>
+          <v-list-item>
+            <div class="email">
+              <font-awesome-icon
+                  :icon="['fa-solid', 'fa-user']"
+                  class="navbar__user"/>
+              <div style="padding-bottom: 7px;">{{ email }}</div>
+            </div>
+          </v-list-item>
+          <div>
+            <v-divider></v-divider>
+          </div>
+
+          <div class="nav-items">
+            <v-list-item title="My pets" @click="activeTabIndex=0"></v-list-item>
+            <v-list-item title="Add pet" @click="activeTabIndex=1"></v-list-item>
+            <v-list-item title="Add feeding time" @click="activeTabIndex=2"></v-list-item>
+            <v-list-item title="Feeding history" @click="activeTabIndex=3"></v-list-item>
+            <v-list-item title="LiveStream" @click="activeTabIndex=4"></v-list-item>
+          </div>
+          <div class="logout-wrapper">
+            <v-list-item class="logout" title="Logout" @click="logout">
+            </v-list-item>
+          </div>
+        </v-list>
+      </v-navigation-drawer>
+      <v-main style="height: 100vh; background-color: #f5f7f8;">
+        <div class="content">
+          <div v-if="activeTabIndex === 0" class="content__item">
+            <span class="content__title">My pets</span>
+            <PetList/>
+          </div>
+          <div v-if="activeTabIndex === 1" class="content__item">
+            <span class="content__title">Add a new pet</span>
+            <CreatePet @return-home="activeTabIndex = 0"/>
+          </div>
+          <div v-if="activeTabIndex === 2" class="content__item">
+            <span class="content__title">Add feeding </span>
+            <FeedingForm @goto-feedhistory="activeTabIndex=3"></FeedingForm>
+          </div>
+          <div v-if='activeTabIndex === 3' class='content__item'>
+            <span class='content__title'>Feeding history</span>
+            <FeedingHistory/>
+          </div>
+          <div v-if='activeTabIndex === 4' class='content__item'>
+            <span class='content__title'>Live Stream</span>
+            <LiveStream/>
+          </div>
         </div>
-      </div>
-      <BaseButton class="navbar__item" text="Logout" @click="logout"/>
-    </div>
-    <div class="content">
-      <div v-if="activeTabIndex === 0" class="content__item">
-        <span class="content__title">My pets</span>
-        <PetList/>
-      </div>
-      <div v-if="activeTabIndex === 1" class="content__item">
-        <span class="content__title">Add a new pet</span>
-        <CreatePet @return-home="activeTabIndex = 0"/>
-      </div>
-      <div v-if="activeTabIndex === 2" class="content__item">
-        <span class="content__title">Add feeding </span>
-        <FeedingForm @goto-feedhistory="activeTabIndex=3"></FeedingForm>
-      </div>
-      <div v-if='activeTabIndex === 3' class='content__item'>
-        <span class='content__title'>Feeding history</span>
-        <FeedingHistory/>
-      </div>
-    </div>
-  </div>
+        <div class="content2">
+        </div>
+      </v-main>
+    </v-layout>
+  </v-card>
 </template>
 
 <style scoped>
-.dashboard {
+.logo {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  margin: 2em 1em;
+  justify-content: center;
+
+}
+
+img {
+  height: 150px;
 }
 
 .navbar__user {
-  font-size: 100px;
+  font-size: 25px;
+  margin-top: 10px;
+  padding-right: 20px;
 }
 
-.navbar {
-  width: 20%;
-  height: 95vh;
+:deep(.v-list) {
+  height: 100%;
+}
+
+:deep(.v-layout) {
+  background-color: #f5f7f8;
+}
+
+:deep(.v-navigation-drawer) {
+  height: calc(100% - 60px) !important;
+  border-radius: 21px;
+  margin: 30px;
+}
+
+:deep(.v-list-item) {
   display: flex;
-  flex-direction: column;
-  font-size: 30px;
+  justify-content: center;
+  margin: 10px;
 }
 
-.navbar__item {
-  margin: 1em 0;
-  font-size: 30px;
-  padding: 10px;
-  border-radius: 10px;
+:deep(.v-list-item-title) {
+  font-size: medium;
+  line-height: 2rem;
 }
 
-.navbar__wrapper {
-  flex: 1;
+:deep(.v-main) {
+  background-color: rgb(245, 247, 248);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
 
-.navbar__action {
-  margin: 3em 0;
+.nav-items {
+  margin-top: 10px;
+  font-size: large;
+}
+
+.email {
+  margin-top: -10px;
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
-.navbar__email {
-  font-size: 20px;
+.logout-wrapper {
+  display: flex;
+  position: relative;
+  height: 100%;
+  text-align: end;
+  align-content: flex-end;
+  justify-content: center;
+}
+
+.logout {
+  width: 100%;
+  position: absolute;
+  bottom: 480px;
+
 }
 
 .content {
-  width: 100%;
+  width: 80%;
+  height: 78%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 5em;
+  padding: 2em;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+  z-index: 3;
+  overflow-y: auto;
 }
+
+.content:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url("../assets/animalbg.jpg") center center;
+  opacity: .03;
+}
+
+.content2 {
+  width: 98%;
+  height: 34vh;
+  position: absolute;
+  z-index: 1;
+  background: url("/src/assets/photomain.png") center center;
+  background-repeat: repeat;
+  bottom: 0;
+  margin-left: 332px;
+}
+
 
 .content__item {
   width: 100%;
@@ -134,4 +212,5 @@ function logout() {
   display: flex;
   justify-content: center;
 }
+
 </style>
