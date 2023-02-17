@@ -1,6 +1,8 @@
 <script setup>
 import {useRouter} from 'vue-router';
+
 const router = useRouter();
+
 function changeRoute(url) {
   router.push(url);
 }
@@ -27,6 +29,7 @@ function changeRoute(url) {
   height: 100px;
   width: 100px;
 }
+
 .img {
   width: 100%;
   height: 100vh;
@@ -34,6 +37,7 @@ function changeRoute(url) {
   background: url("../assets/dogCatEating.png") repeat;
   position: relative;
 }
+
 .img::before {
   content: "";
   position: absolute;
@@ -41,6 +45,7 @@ function changeRoute(url) {
   width: 100%;
   background: rgba(0, 0, 0, 0.4);
 }
+
 .center {
   position: absolute;
   top: 52%;
@@ -51,17 +56,20 @@ function changeRoute(url) {
   text-align: center;
   z-index: 2;
 }
+
 .center .title {
   color: #fff;
   font-size: 55px;
   font-weight: 600;
 }
+
 .center .sub_title {
   color: #fff;
   padding-top: 40px;
   font-size: 52px;
   font-weight: 600;
 }
+
 .center .commercial {
   height: 55px;
   width: 13em;
@@ -77,13 +85,16 @@ function changeRoute(url) {
   color: #fff;
   background: none;
 }
+
 .commercial:hover {
   background: white;
   color: black;
 }
+
 .center .btns {
   margin-top: 40px;
 }
+
 .center .btns button {
   height: 55px;
   width: 170px;
@@ -97,14 +108,17 @@ function changeRoute(url) {
   outline: none;
   transition: all 0.3s ease;
 }
+
 .center .btns button:first-child {
   color: #fff;
   background: none;
 }
+
 .btns button:first-child:hover {
   background: white;
   color: black;
 }
+
 .center .btns button:last-child {
   background: white;
   color: black;

@@ -5,13 +5,13 @@
 Create a virtual environment in the root folder
 
 ```python
-python3 -m venv venv
+python -m venv venv
 ```
 
 Active the virtual environment
 
 ```bash
-source venv/bin/activate
+ source venv/bin/activate
 ```
 
 Download dependencies
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 Active the virtual environment
 
 ```bash
-source venv/bin/activate
+ source venv/bin/activate
 ```
 
 Run the uvicorn server
