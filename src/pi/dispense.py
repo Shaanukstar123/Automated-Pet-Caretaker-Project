@@ -8,21 +8,15 @@ def stop():
 
 def start_dispense(target):
     print(target)
-    servo_pin = 25
     hx = weight.setup_weight()
     pwm_servo = servo.setup_servo()
-    count = 0
     avg = 0
-    total = 0
-    error = 0.5*target
     servo.dispense(pwm_servo)
     hx.tare()
     window = []
-    stuck_speed = 100
     speed = 100
     motor.reverseDrive(speed)
     time.sleep(0.5)
-    change_in_weight = 0
     elapsed_time = 0
     running = True
     start_time = time.time()
@@ -53,10 +47,6 @@ def start_dispense(target):
         window = sorted(window)
         change_in_weight = avg - window[(len(window)//2)]
         avg = window[(len(window)//2)]
-        # if change_in_weight<2.5 and elapsed_time>2:
-        #     elapsed_time=  0
-        #     start_time = time.time()
-        #     unstuck()
         
         print("Average: ",avg)
         if avg>target:

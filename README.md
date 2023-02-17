@@ -1,3 +1,10 @@
+# References
+
+hx711.py - https://github.com/tatobari/hx711py
+Tutorial for setting up load sensor - https://tutorials-raspberrypi.com/digital-raspberry-pi-scale-weight-sensor-hx711/
+Numberpad - https://maker.pro/raspberry-pi/tutorial/how-to-use-a-keypad-with-a-raspberry-pi-4
+Training a YOLOv8 vision model (only for generating a model)- https://github.com/ultralytics/ultralytics
+
 # Objectives
 
 ## Week 1:

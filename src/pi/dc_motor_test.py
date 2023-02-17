@@ -34,17 +34,13 @@ def allStop():
     
 
 def forwardDrive(speed):
-    # Set the AIN1 pin to HIGH and AIN2 to LOW
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
-    # Start PWM with the specified duty cycle
     pwm.start(speed)
 
 def reverseDrive(speed):
-    # Set the AIN1 pin to LOW and AIN2 to HIGH
     GPIO.output(AIN1, GPIO.LOW)
     GPIO.output(AIN2, GPIO.HIGH)
-    # Start PWM with the specified duty cycle
     pwm.start(speed)
 
 def unstuck():

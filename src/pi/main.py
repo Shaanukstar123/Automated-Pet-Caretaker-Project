@@ -36,13 +36,13 @@ def check_dispense(now,timetable):
             print(timetable[i]["date"])
             print("Dispense FOOD")
             (timetable[i])["date"] = "dispensed"
-            dispense.start_dispense((timetable[i])["food"])
-    #dispense.start_dispense(10)      
+            dispense.start_dispense((timetable[i])["food"])     
 
 def mqtt_thread():
     client = mqtt.Client()
     ##TLS SSL
     client. tls_set(cert_reqs=ssl.CERT_NONE)
+    ##Enable next 2 lines to check certificates
     #client. tls_insecure_set(True)
     #client.tls_set(ca_certs="chain.pem", certfile="cert.pem",keyfile="privkey.pem")
     client.connect("petsitter.ddnsgeek.com",port=8883)
