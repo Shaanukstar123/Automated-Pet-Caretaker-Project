@@ -24,10 +24,14 @@ pwm = GPIO.PWM(PWM_PIN, 50)
 stuck_speed = 100
 
 def allStop():
+    pwm.start(0)
+    pwm.stop()
     # Set all pins to LOW
     GPIO.output(AIN1, GPIO.LOW)
     GPIO.output(AIN2, GPIO.LOW)
-    pwm.stop()
+    #GPIO.setup(AIN1, GPIO.OUT)
+    #GPIO.setup(AIN2, GPIO.OUT)
+    
 
 def forwardDrive(speed):
     # Set the AIN1 pin to HIGH and AIN2 to LOW

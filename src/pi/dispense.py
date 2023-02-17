@@ -3,8 +3,11 @@ import servo_test as servo
 import dc_motor_test as motor
 import time
 
+def stop():
+    motor.allStop()
 
 def start_dispense(target):
+    print(target)
     servo_pin = 25
     hx = weight.setup_weight()
     pwm_servo = servo.setup_servo()
@@ -22,8 +25,19 @@ def start_dispense(target):
     change_in_weight = 0
     elapsed_time = 0
     running = True
+    start_time = time.time()
     while running:
         elapsed_time = time.time()
+        print("Elapsed TIme: ",elapsed_time)
+
+        if elapsed_time>start_time+120:
+            running = False
+            print("DISPENSING!")
+            motor.allStop()
+            servo.dispense(pwm_servo)
+            hx.tare()
+            break
+
         if int(elapsed_time)%2==0:
             motor.reverseDrive(speed)
         else:
@@ -44,9 +58,16 @@ def start_dispense(target):
         #     start_time = time.time()
         #     unstuck()
         
-
+        print("Average: ",avg)
         if avg>target:
+            running = False
+            print("DISPENSING!")
             motor.allStop()
             servo.dispense(pwm_servo)
             hx.tare()
-            running = False
+            break
+            
+
+
+
+

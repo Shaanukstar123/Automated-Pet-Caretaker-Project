@@ -73,4 +73,5 @@ async def delete_feeding(feeding: Feeding):
     # Converting the Feeding object into a dictionary.
     feeding_dict = feeding.dict()
     # Code for deleting the feeding goes here
+    client.publish("deletion", json.dumps(feeding_dict))
     return {"message": f"Feeding deleted: ${feeding_dict}"}
