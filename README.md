@@ -5,6 +5,9 @@ Tutorial for setting up load sensor - https://tutorials-raspberrypi.com/digital-
 Numberpad - https://maker.pro/raspberry-pi/tutorial/how-to-use-a-keypad-with-a-raspberry-pi-4
 Training a YOLOv8 vision model (only for generating a model)- https://github.com/ultralytics/ultralytics
 
+## Marketing Website - https://dashing-bubblegum-df43e9.netlify.app/
+
+
 # Objectives
 
 ## Week 1:
